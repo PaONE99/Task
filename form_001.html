@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Survey Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #687EFF;
+            height: 100%;
+            width: 100%;
+        }
+        #head1{
+            text-align: center;
+            text-shadow: 2px 2px 4px #000000;
+            color: #fdfdfd;
+        }
+        #submitBtn{
+            background: #687EFF;
+            margin-left: 10px; 
+        }
+        #resetBtn{
+            background: #687EFF;  
+            margin-left: 30px;
+        }
+        
+        .container {
+            width: 650px;
+            height: 400px;
+            margin-left: 28%;
+            padding-top: 50px;
+            background: #fdfdfd;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);  
+        }
+        #footer{
+            display: block;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: red;
+            color: white;
+            text-align: center;
+        }
+        .form-row {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .form-group:last-child {
+            margin-right: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="head1">Survey Form</h1>
+    <footer id="footer">
+        <p>@ 2023 Customer Survey Form. All Rights Reserved | Design by p@1<br>
+      </footer>
+    <div class="container">
+        <form id="surveyForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" required>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country:</label>
+                    <select id="country" required>
+                        <option value="">Select a country</option>
+                        <option value="India">India</option>
+                        <option value="Canada">Canada</option>
+                        <!-- Add more countries as needed -->
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Gender:</label>
+                    <input type="checkbox" id="male" name="gender" value="Male"> <label for="male">Male</label>
+                    <input type="checkbox" id="female" name="gender" value="Female"> <label for="female">Female</label>
+                </div>
+                <div class="form-group">
+                    <label for="profession">Profession:</label>
+                    <input type="text" id="profession" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="mobile">Mobile Number:</label>
+                    <input type="tel" id="mobile" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <button type="button" id="submitBtn">Submit</button>
+                <button type="button" id="resetBtn">Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- JavaScript for form validation and popup display -->
+    <script>
+        const surveyForm = document.getElementById('surveyForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        submitBtn.addEventListener('click', function() {
+            if (surveyForm.checkValidity()) {
+                // If the form is valid, display a popup with the selected values
+                const firstName = document.getElementById('firstName').value;
+                const lastName = document.getElementById('lastName').value;
+                const dob = document.getElementById('dob').value;
+                const country = document.getElementById('country').value;
+                const gender = Array.from(document.querySelectorAll('input[name="gender"]:checked')).map(checkbox => checkbox.value);
+                const profession = document.getElementById('profession').value;
+                const email = document.getElementById('email').value;
+                const mobile = document.getElementById('mobile').value;
+
+                const popupContent = `
+                    <h2>Survey Form Submission</h2>
+                    <p><strong>First Name:</strong> ${firstName}</p>
+                    <p><strong>Last Name:</strong> ${lastName}</p>
+                    <p><strong>Date of Birth:</strong> ${dob}</p>
+                    <p><strong>Country:</strong> ${country}</p>
+                    <p><strong>Gender:</strong> ${gender.join(', ')}</p>
+                    <p><strong>Profession:</strong> ${profession}</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Mobile Number:</strong> ${mobile}</p>
+                `;
+
+                const popup = window.open('', 'Survey Form Submission', 'width=400, height=400');
+                popup.document.write(popupContent);
+                resetForm();
+            } else {
+                alert('Please fill out all required fields.');
+            }
+        });
+
+        resetBtn.addEventListener('click', resetForm);
+
+        function resetForm() {
+            surveyForm.reset();
+        }
+    </script>
+</body>
+</html>
